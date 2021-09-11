@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ProjectItem from "./project/ProjectItem";
 import ProjectButton from "./project/ProjectButton";
 import {connect} from "react-redux";
@@ -12,7 +12,10 @@ class Dashboard extends React.Component<any, any> {
         this.props.getProjects();
     }
 
+    // noinspection BadExpressionStatementJS
     render() {
+        const {projects} = this.props.project
+
         return (
             <div className="projects">
                 <div className="container">
@@ -23,7 +26,11 @@ class Dashboard extends React.Component<any, any> {
                             <ProjectButton/>
                             <br/>
                             <hr/>
-                            <ProjectItem/>
+                            {
+                                projects.map((project: any) => (
+                                    <ProjectItem key={project.id} project={project}/>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
