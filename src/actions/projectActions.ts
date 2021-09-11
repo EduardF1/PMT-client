@@ -1,9 +1,8 @@
 import axios from "axios";
-import {GET_ERRORS, GET_PROJECT, GET_PROJECTS} from "./types";
+import {DELETE_PROJECT, GET_ERRORS, GET_PROJECT, GET_PROJECTS} from "./types";
 
 export const createProject = (project: any, history: any) => async (dispatch: any) => {
     try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const res = await axios.post("http://localhost:8080/api/project", project);
         history.push("/dashboard"); // redirect to dashboard
     } catch (err: any) {
@@ -33,5 +32,13 @@ export const getProject = (id: string, history: any) => async (dispatch: any) =>
     } catch (err:any) {
         history.push("/dashboard");
     }
+}
 
+export const deleteProject = (id:string) => async (dispatch:any) => {
+    console.log(id);
+    await axios.delete(`http://localhost:8080/api/project/${id}`);
+    dispatch({
+        type:DELETE_PROJECT,
+        payload:id
+    })
 }
