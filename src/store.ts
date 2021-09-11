@@ -15,7 +15,7 @@ if (window.navigator.userAgent.includes("Chrome")) {
         compose(
             applyMiddleware(...middleware),
             // redux extensions available only for Chrome
-            composeWithDevTools({})
+            composeWithDevTools()
             )
     );
 } else {
