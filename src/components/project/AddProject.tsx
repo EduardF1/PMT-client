@@ -1,6 +1,11 @@
 import React from 'react';
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {createProject} from "../../actions/projectActions";
+
 
 class AddProject extends React.Component<any, any> {
+    public static propTypes = {};
     constructor(props: any) {
         super(props);
 
@@ -30,7 +35,7 @@ class AddProject extends React.Component<any, any> {
             endDate: this.state.endDate
         };
 
-        console.log(newProject);
+        this.props.createProject(newProject, this.props.history);
     }
 
     render() {
@@ -103,4 +108,11 @@ class AddProject extends React.Component<any, any> {
     }
 }
 
-export default AddProject;
+AddProject.propTypes = {
+    createProject: PropTypes.func.isRequired
+};
+
+export default connect(
+    null,
+    { createProject }
+)(AddProject);
