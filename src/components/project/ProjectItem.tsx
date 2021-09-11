@@ -8,7 +8,6 @@ class ProjectItem extends React.Component<any, any> {
     public static propTypes: any;
 
     onDeleteClick = (id: any) => {
-        console.log(id)
         this.props.deleteProject(id);
     }
 
