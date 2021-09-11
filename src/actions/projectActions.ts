@@ -6,27 +6,32 @@ export const createProject = (project: any, history: any) => async (dispatch: an
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const res = await axios.post("http://localhost:8080/api/project", project);
         history.push("/dashboard"); // redirect to dashboard
-    } catch (err:any) {
+    } catch (err: any) {
         dispatch({
-            type:GET_ERRORS,
-            payload:err.response.data
+            type: GET_ERRORS,
+            payload: {}
 
         })
     }
 }
 
-export const getProjects = () => async (dispatch:any) => {
+export const getProjects = () => async (dispatch: any) => {
     const res = await axios.get("http://localhost:8080/api/project/all");
     dispatch({
-        type:GET_PROJECTS,
-        payload:res.data
+        type: GET_PROJECTS,
+        payload: res.data
     });
 }
 
-export const getProject = (id:string, history: any) => async (dispatch:any) => {
-    const res = await axios.get(`http://localhost:8080/api/project/${id}`);
-    dispatch({
-        type:GET_PROJECT,
-        payload:res.data
-    })
+export const getProject = (id: string, history: any) => async (dispatch: any) => {
+    try {
+        const res = await axios.get(`http://localhost:8080/api/project/${id}`);
+        dispatch({
+            type: GET_PROJECT,
+            payload: res.data
+        })
+    } catch (err:any) {
+        history.push("/dashboard");
+    }
+
 }
