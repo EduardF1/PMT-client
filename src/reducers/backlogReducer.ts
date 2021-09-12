@@ -2,13 +2,13 @@ import {GET_BACKLOG, GET_PROJECT_TASK, DELETE_PROJECT_TASK} from "../actions/typ
 
 const initialState = {
     projectTasks: [],
-    projectTask : {}
+    projectTask: {}
 }
 
-export default function backlogReducer(state = initialState, action:any){
+export default function backlogReducer(state = initialState, action: any) {
     switch (action.type) {
         case GET_BACKLOG:
-            return{
+            return {
                 ...state,
                 projectTasks: action.payload
             }
@@ -20,7 +20,9 @@ export default function backlogReducer(state = initialState, action:any){
         case DELETE_PROJECT_TASK:
             return {
                 ...state,
-                //TODO
+            //    TODO
             }
+        default:
+            return state;
     }
 }

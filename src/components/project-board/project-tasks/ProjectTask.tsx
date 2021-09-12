@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 class ProjectTask extends React.Component<any, any> {
 
     render() {
-
         return (
             <div className="card mb-1 bg-light">
 
