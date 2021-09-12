@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import {addProjectTask} from '../../../actions/backlogActions';
 import PropTypes from 'prop-types';
 
@@ -29,6 +29,12 @@ class AddProjectTask extends React.Component<any, any> {
         this.setState({[event.target.name]: event.target.value})
     }
 
+    componentWillReceiveProps(nextProps: Readonly<any>) {
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
+
     onSubmit(event: any) {
         event.preventDefault();
 
@@ -39,12 +45,12 @@ class AddProjectTask extends React.Component<any, any> {
             priority: this.state.priority,
             dueDate: this.state.dueDate
         };
-
-        console.log(newTask);
+        this.props.addProjectTask(this.state.projectIdentifier, newTask, this.props.history);
     }
 
     render() {
         const {id} = this.props.match.params;
+        const {errors} = this.state;
 
         return (
             <div className="add-PBI">
@@ -60,16 +66,23 @@ class AddProjectTask extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        className="form-control form-control-lg"
+                                        className={classNames("form-control form-control-lg mb-2", {
+                                            "is-invalid": errors.summary
+                                        })}
                                         name="summary"
                                         placeholder="Project Task summary"
                                         value={this.state.summary}
                                         onChange={this.onChange}
                                     />
+                                    {
+                                        errors.summary && (
+                                            <div className="invalid-feedback mb-1">{errors.summary}</div>
+                                        )
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <textarea
-                                        className="form-control form-control-lg"
+                                        className="form-control form-control-lg mb-2"
                                         placeholder="Acceptance Criteria"
                                         name="acceptanceCriteria"
                                         value={this.state.acceptanceCriteria}
@@ -80,7 +93,7 @@ class AddProjectTask extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="date"
-                                        className="form-control form-control-lg"
+                                        className="form-control form-control-lg mb-2"
                                         name="dueDate"
                                         value={this.state.dueDate}
                                         onChange={this.onChange}
@@ -88,7 +101,7 @@ class AddProjectTask extends React.Component<any, any> {
                                 </div>
                                 <div className="form-group">
                                     <select
-                                        className="form-control form-control-lg"
+                                        className="form-control form-control-lg mb-2"
                                         name="priority"
                                         value={this.state.priority}
                                         onChange={this.onChange}
@@ -125,6 +138,11 @@ class AddProjectTask extends React.Component<any, any> {
 }
 
 AddProjectTask.propTypes = {
-    addProjectTask: PropTypes.func.isRequired
+    addProjectTask: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
-export default connect(null, {addProjectTask})(AddProjectTask);
+
+const mapStateToProps = (state: { errors: []; }) => ({
+    errors: state.errors
+})
+export default connect(mapStateToProps, {addProjectTask})(AddProjectTask);
