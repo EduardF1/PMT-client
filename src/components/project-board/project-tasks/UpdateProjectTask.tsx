@@ -22,7 +22,8 @@ class UpdateProjectTask extends React.Component<any, any> {
             priority: "",
             dueDate: "",
             projectIdentifier: "",
-            createdAt: ""
+            createdAt: "",
+            errors:{}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -35,6 +36,10 @@ class UpdateProjectTask extends React.Component<any, any> {
 
     // state after component mount
     UNSAFE_componentWillReceiveProps(nextProps: any) {
+        if(nextProps.errors){
+            this.setState({errors: nextProps.errors});
+        }
+
         const {
             id,
             projectSequence,

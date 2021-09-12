@@ -29,7 +29,7 @@ class AddProjectTask extends React.Component<any, any> {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps: Readonly<any>) {
+    componentDidUpdate(nextProps: Readonly<any>) {
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors});
         }
