@@ -24,6 +24,7 @@ class UpdateProjectTask extends React.Component<any, any> {
             createdAt: ""
         };
         this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -32,7 +33,7 @@ class UpdateProjectTask extends React.Component<any, any> {
     }
 
     // state after component mount
-    componentWillReceiveProps(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
         const {
             id,
             projectSequence,
@@ -89,7 +90,7 @@ class UpdateProjectTask extends React.Component<any, any> {
                             </a>
                             <h4 className="display-4 text-center">Update Project Task</h4>
                             <p className="lead text-center">Project Name: {this.state.projectIdentifier}|Project Task ID: {this.state.projectSequence}</p>
-                            <form>
+                            <form onSubmit={this.onSubmit}>
                                 <div className="form-group">
                                     <input
                                         type="text"

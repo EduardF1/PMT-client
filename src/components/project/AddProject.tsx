@@ -25,7 +25,7 @@ class AddProject extends React.Component<any, any> {
     }
 
     // lifecycle hooks
-    componentWillReceiveProps(nextProps: Readonly<any>, nextContext: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: Readonly<any>, nextContext: any) {
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors});
         }

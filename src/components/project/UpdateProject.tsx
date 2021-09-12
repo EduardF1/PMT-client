@@ -23,7 +23,7 @@ class UpdateProject extends React.Component<any, any> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: any) {
+    UNSAFE_componentWillReceiveProps(nextProps: any) {
 
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors});
