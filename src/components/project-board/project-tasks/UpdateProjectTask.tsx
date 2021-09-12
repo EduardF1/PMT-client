@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import classNames from "classnames";
 import {getProjectTask, updateProjectTask} from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class UpdateProjectTask extends React.Component<any, any> {
 
@@ -23,7 +23,7 @@ class UpdateProjectTask extends React.Component<any, any> {
             dueDate: "",
             projectIdentifier: "",
             createdAt: "",
-            errors:{}
+            errors: {}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -36,7 +36,7 @@ class UpdateProjectTask extends React.Component<any, any> {
 
     // state after component mount
     UNSAFE_componentWillReceiveProps(nextProps: any) {
-        if(nextProps.errors){
+        if (nextProps.errors) {
             this.setState({errors: nextProps.errors});
         }
 
@@ -82,11 +82,11 @@ class UpdateProjectTask extends React.Component<any, any> {
             projectIdentifier: this.state.projectIdentifier,
             createdAt: this.state.createdAt
         };
-        // console.log(updatedProjectTask);
         this.props.updateProjectTask(this.state.projectIdentifier, this.state.projectSequence, updatedProjectTask, this.props.history);
     }
 
     render() {
+        const {errors} = this.state;
         return (
             <div className="add-PBI">
                 <div className="container">
@@ -101,12 +101,19 @@ class UpdateProjectTask extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        className="form-control form-control-lg"
+                                        className={classNames("form-control form-control-lg", {
+                                            "is-invalid": errors.summary
+                                        })}
                                         name="summary"
                                         placeholder="Project Task summary"
                                         value={this.state.summary}
                                         onChange={this.onChange}
                                     />
+                                    {
+                                        errors.summary && (
+                                            <div className="invalid-feedback">{errors.summary}</div>
+                                        )
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <textarea

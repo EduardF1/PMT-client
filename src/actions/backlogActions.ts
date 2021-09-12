@@ -58,7 +58,7 @@ export const updateProjectTask = (backlogId: string, projectTaskId: string, proj
     } catch (err:any) {
         dispatch({
             type: GET_ERRORS,
-            payload: err.reponse.data
+            payload: err.response.data
         })
     }
 }
