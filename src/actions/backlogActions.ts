@@ -15,7 +15,8 @@ export const addProjectTask = (backlogId: string, projectTask: any, history: any
             type: GET_ERRORS,
             payload: err.response.data
         });
-    };
+    }
+    ;
 };
 
 export const getBacklog = (backlogId: string) => async (dispatch: any) => {
@@ -30,7 +31,8 @@ export const getBacklog = (backlogId: string) => async (dispatch: any) => {
             type: GET_ERRORS,
             payload: err.response.data
         });
-    };
+    }
+    ;
 };
 
 export const getProjectTask = (backlogId: string, projectTaskId: string, history: any) => async (dispatch: any) => {
@@ -42,5 +44,21 @@ export const getProjectTask = (backlogId: string, projectTaskId: string, history
         });
     } catch (err) {
         history.push("/dashboard");
+    }
+}
+
+export const updateProjectTask = (backlogId: string, projectTaskId: string, projectTask: any, history: any) => async (dispatch: any) => {
+    try {
+        await axios.patch(`/api/backlog/${backlogId}/${projectTaskId}`, projectTask);
+        history.push(`/projectBoard/${backlogId}`);
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        })
+    } catch (err:any) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.reponse.data
+        })
     }
 }

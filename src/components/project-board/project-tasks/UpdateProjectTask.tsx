@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import classNames from "classnames";
-import {getProjectTask} from "../../../actions/backlogActions";
+import {getProjectTask, updateProjectTask} from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
+import { Link } from 'react-router-dom';
 
 class UpdateProjectTask extends React.Component<any, any> {
 
@@ -63,20 +64,21 @@ class UpdateProjectTask extends React.Component<any, any> {
         this.setState({[event.target.name]: event.target.value});
     }
 
-    onSubmit(event:any){
+    onSubmit(event: any) {
         event.preventDefault();
         const updatedProjectTask = {
-            id:this.state.id,
-            projectSequence:this.state.projectSequence,
-            summary:this.state.summary,
-            acceptanceCriteria:this.state.acceptanceCriteria,
-            status:this.state.status,
-            priority:this.state.priority,
-            dueDate:this.state.dueDate,
-            projectIdentifier:this.state.projectIdentifier,
-            createdAt:this.state.createdAt
+            id: this.state.id,
+            projectSequence: this.state.projectSequence,
+            summary: this.state.summary,
+            acceptanceCriteria: this.state.acceptanceCriteria,
+            status: this.state.status,
+            priority: this.state.priority,
+            dueDate: this.state.dueDate,
+            projectIdentifier: this.state.projectIdentifier,
+            createdAt: this.state.createdAt
         };
-        console.log(updatedProjectTask);
+        // console.log(updatedProjectTask);
+        this.props.updateProjectTask(this.state.projectIdentifier, this.state.projectSequence, updatedProjectTask, this.props.history);
     }
 
     render() {
@@ -85,9 +87,9 @@ class UpdateProjectTask extends React.Component<any, any> {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <a href="#" className="btn btn-light">
+                            <Link to={`/projectBoard/${this.state.projectIdentifier}`} className="btn btn-light">
                                 Back to Project Board
-                            </a>
+                            </Link>
                             <h4 className="display-4 text-center">Update Project Task</h4>
                             <p className="lead text-center">Project Name: {this.state.projectIdentifier}|Project Task ID: {this.state.projectSequence}</p>
                             <form onSubmit={this.onSubmit}>
@@ -160,11 +162,14 @@ class UpdateProjectTask extends React.Component<any, any> {
 
 UpdateProjectTask.propTypes = {
     getProjectTask: PropTypes.func.isRequired,
-    projectTask: PropTypes.object.isRequired
+    projectTask: PropTypes.object.isRequired,
+    updateProjectTask: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state: any) => ({
-    projectTask: state.backlog.projectTask
+    projectTask: state.backlog.projectTask,
+    errors: state.errors
 });
 
-export default connect(mapStateToProps, {getProjectTask})(UpdateProjectTask);
+export default connect(mapStateToProps, {getProjectTask, updateProjectTask})(UpdateProjectTask);
