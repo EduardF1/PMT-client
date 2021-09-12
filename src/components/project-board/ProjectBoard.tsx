@@ -15,15 +15,28 @@ class ProjectBoard extends React.Component<any, any> {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const {id} = this.props.match.params;
         this.props.getBacklog(id);
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        this.setState(nextProps.errors ? {errors: nextProps.errors} : {});
     }
 
     render() {
         const {id} = this.props.match.params;
         const {projectTasks} = this.props.backlog;
+        const {errors} = this.state;
+        let boardContent;
+        const boardErrorHandler = (errors: any, projectTasks: any) => {
+            return (projectTasks.length < 1) ? (errors.projectNotFound) ?
+                    <div className="alert alert-danger text-center" role="alert">{errors.projectNotFound}</div> :
+                    <div className="alert alert-info text-center" role="alert">No Project Tasks on this board.</div> :
+                    <Backlog projectTasks={projectTasks}/>
+        }
 
+        boardContent = boardErrorHandler(errors, projectTasks);
         return (
             <div className="container">
                 <Link to={`/addProjectTask/${id}`} className="btn btn-primary mb-3">
@@ -31,7 +44,7 @@ class ProjectBoard extends React.Component<any, any> {
                 </Link>
                 <br/>
                 <hr/>
-                <Backlog projectTasks={projectTasks}/>
+                {boardContent}
             </div>
         );
     }
@@ -45,7 +58,7 @@ ProjectBoard.propTypes = {
 
 const mapStateToProps = (state: any) => ({
     backlog: state.backlog,
-    errors:state.errors
+    errors: state.errors
 });
 
 export default connect(mapStateToProps, {getBacklog})(ProjectBoard);
