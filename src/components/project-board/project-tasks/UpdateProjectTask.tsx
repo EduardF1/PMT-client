@@ -4,9 +4,14 @@ import classNames from "classnames";
 import {getProjectTask} from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
 
-class UpdateProjectTask extends React.Component<any, any>  {
+class UpdateProjectTask extends React.Component<any, any> {
 
     public static propTypes = {};
+
+    componentDidMount() {
+        const {backlogId, projectTaskId} = this.props.match.params;
+        this.props.getProjectTask(backlogId, projectTaskId, this.props.history);
+    }
 
     render() {
         return (
@@ -21,14 +26,14 @@ class UpdateProjectTask extends React.Component<any, any>  {
                             <p className="lead text-center">Project Name + Project Code</p>
                             <form>
                                 <div className="form-group">
-                                    <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary" />
+                                    <input type="text" className="form-control form-control-lg" name="summary" placeholder="Project Task summary"/>
                                 </div>
                                 <div className="form-group">
                                     <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria"></textarea>
                                 </div>
                                 <h6>Due Date</h6>
                                 <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="dueDate" />
+                                    <input type="date" className="form-control form-control-lg" name="dueDate"/>
                                 </div>
                                 <div className="form-group">
                                     <select className="form-control form-control-lg" name="priority">
@@ -48,7 +53,7 @@ class UpdateProjectTask extends React.Component<any, any>  {
                                     </select>
                                 </div>
 
-                                <input type="submit" className="btn btn-primary btn-block mt-4" />
+                                <input type="submit" className="btn btn-primary btn-block mt-4"/>
                             </form>
                         </div>
                     </div>
@@ -64,8 +69,8 @@ UpdateProjectTask.propTypes = {
     projectTask: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state: any) => ({
     projectTask: state.backlog.projectTask
 });
 
-export default connect(mapStateToProps, {getProjectTask}) (UpdateProjectTask);
+export default connect(mapStateToProps, {getProjectTask})(UpdateProjectTask);
