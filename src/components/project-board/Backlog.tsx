@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import ProjectTask from './project-tasks/ProjectTask';
 
 class Backlog extends React.Component<any, any> {
+
     render() {
         const {projectTasks} = this.props;
         const tasks = projectTasks.map((projectTask: any) =>
+            // @ts-ignore
             <ProjectTask key={projectTask.id} projectTask={projectTask}/>
         );
 
