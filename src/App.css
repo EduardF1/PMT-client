@@ -9,13 +9,25 @@ img {
 .fa.fa-edit {
     color: #18a2b9;
 }
+
 .nav-items-end {
     margin-left: 45rem;
 }
 
-.delete-buttons-position {
-    width: 7.9rem;
-    margin-left: 3.5rem;
+/* handle mobile screen size */
+@media screen and (min-width: 480px) {
+    .nav-items-end {
+        margin-left: auto;
+    }
+}
+
+#delete-buttons-size {
+    width: 8rem;
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .list-group-item {

@@ -10,7 +10,7 @@ export const addProjectTask = (backlogId: string, projectTask: any, history: any
             payload: {}
 
         });
-    } catch (err:any) {
+    } catch (err: any) {
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
@@ -18,14 +18,17 @@ export const addProjectTask = (backlogId: string, projectTask: any, history: any
     }
 };
 
-export const getBacklog = (backlogId:string) => async (dispatch:any) => {
+export const getBacklog = (backlogId: string) => async (dispatch: any) => {
     try {
         const res = await axios.get(`/api/backlog/${backlogId}`)
         dispatch({
-            type:GET_BACKLOG,
-            payload:res.data
+            type: GET_BACKLOG,
+            payload: res.data
         })
-    }catch (err){
-
-    }
+    } catch (err: any) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        });
+    };
 }

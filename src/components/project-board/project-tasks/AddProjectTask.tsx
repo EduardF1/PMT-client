@@ -126,7 +126,6 @@ class AddProjectTask extends React.Component<any, any> {
                                         <option value="DONE">DONE</option>
                                     </select>
                                 </div>
-
                                 <input type="submit" className="btn btn-primary btn-block mt-4 w-100"/>
                             </form>
                         </div>

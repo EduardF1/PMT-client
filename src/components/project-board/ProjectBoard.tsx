@@ -10,6 +10,9 @@ class ProjectBoard extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
+        this.state = {
+            errors: {}
+        };
     }
 
     componentDidMount(){
@@ -36,11 +39,13 @@ class ProjectBoard extends React.Component<any, any> {
 
 ProjectBoard.propTypes = {
     backlog: PropTypes.object.isRequired,
-    getBacklog: PropTypes.func.isRequired
+    getBacklog: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state: any) => ({
-    backlog: state.backlog
+    backlog: state.backlog,
+    errors:state.errors
 });
 
 export default connect(mapStateToProps, {getBacklog})(ProjectBoard);
