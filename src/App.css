@@ -9,6 +9,9 @@ img {
 .fa.fa-edit {
     color: #18a2b9;
 }
+.nav-items-end {
+    margin-left: 45rem;
+}
 
 .list-group-item {
     font-weight: bold;
