@@ -13,6 +13,11 @@ img {
     margin-left: 45rem;
 }
 
+.delete-buttons-position {
+    width: 7.9rem;
+    margin-left: 3.5rem;
+}
+
 .list-group-item {
     font-weight: bold;
 }
