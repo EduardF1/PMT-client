@@ -36,9 +36,9 @@ class ProjectTask extends React.Component<any, any> {
                         {projectTask.acceptanceCriteria}
                     </p>
                     <div id="buttons-container">
-                        <a href="#" className="btn btn-primary">
+                        <Link to={`/updateProjectTask/${projectTask.projectIdentifier}/${projectTask.projectSequence}`} className="btn btn-primary">
                             View / Update
-                        </a>
+                        </Link>
                         <button className="btn btn-danger" id="delete-buttons-size">
                             Delete
                         </button>
