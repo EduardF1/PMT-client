@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { createNewUser } from "../../actions/securityActions";
+import React, {Component} from "react";
+import {createNewUser} from "../../actions/securityActions";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import classNames from "classnames";
 
 class Register extends React.Component<any, any> {
     public static propTypes = {};
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
 
         this.state = {
@@ -21,14 +21,19 @@ class Register extends React.Component<any, any> {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-
-    componentWillReceiveProps(nextProps:any) {
-        if (nextProps.errors) {
-            this.setState({ errors: nextProps.errors });
+    componentDidMount() {
+        if (this.props.security.validToken) {
+            this.props.history.push('/dashboard');
         }
     }
 
-    onSubmit(e:any) {
+    componentWillReceiveProps(nextProps: any) {
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
+
+    onSubmit(e: any) {
         e.preventDefault();
         const newUser = {
             username: this.state.username,
@@ -40,12 +45,12 @@ class Register extends React.Component<any, any> {
         this.props.createNewUser(newUser, this.props.history);
     }
 
-    onChange(e:any) {
-        this.setState({ [e.target.name]: e.target.value });
+    onChange(e: any) {
+        this.setState({[e.target.name]: e.target.value});
     }
 
     render() {
-        const { errors } = this.state;
+        const {errors} = this.state;
         return (
             <div className="register">
                 <div className="container">
@@ -116,7 +121,7 @@ class Register extends React.Component<any, any> {
                                         </div>
                                     )}
                                 </div>
-                                <input type="submit" className="btn btn-info w-100 btn-block mt-4" />
+                                <input type="submit" className="btn btn-info w-100 btn-block mt-4"/>
                             </form>
                         </div>
                     </div>
@@ -128,13 +133,15 @@ class Register extends React.Component<any, any> {
 
 Register.propTypes = {
     createNewUser: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state: { errors: []; }) => ({
-    errors: state.errors
+const mapStateToProps = (state: any ) => ({
+    errors: state.errors,
+    security: state.security
 });
 export default connect(
     mapStateToProps,
-    { createNewUser }
+    {createNewUser}
 )(Register);

@@ -38,3 +38,12 @@ export const login = (loginRequest: any) => async (dispatch: any) => {
         });
     }
 };
+
+export const logout = () => async (dispatch: any) => {
+    localStorage.removeItem("jwt_token");
+    setJWTToken(false);
+    dispatch({
+        type: SET_CURRENT_USER,
+        payload: {}
+    });
+}

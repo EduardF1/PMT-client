@@ -3,7 +3,7 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import AddProject from './components/project/AddProject';
 import {Provider} from 'react-redux';
 import store from './store';
@@ -15,6 +15,28 @@ import UpdateProjectTask from './components/project-board/project-tasks/UpdatePr
 import LandingPage from './components/Landing';
 import Register from './components/user-management/Register';
 import Login from './components/user-management/Login';
+import jwt_decode from 'jwt-decode';
+import setJWTToken from '../src/security-utils/jwt-token';
+import {SET_CURRENT_USER} from './actions/types';
+import {logout} from './actions/securityActions';
+import SecuredRoute from '../src/security-utils/SecuredRoute';
+
+const jwtToken = localStorage.jwt_token;
+
+if (jwtToken) {
+    setJWTToken(jwtToken);
+    const decoded_jwt_token: any = jwt_decode(jwtToken);
+    store.dispatch({
+        type: SET_CURRENT_USER,
+        payload: decoded_jwt_token
+    });
+
+    const currentTime = Date.now() / 1000;
+    if (decoded_jwt_token.exp < currentTime) {
+        store.dispatch(logout());
+        window.location.href = "/";
+    }
+}
 
 function App() {
     return (
@@ -31,12 +53,14 @@ function App() {
                     {
                         // Private routes
                     }
-                    <Route exact path='/dashboard' component={Dashboard}/>
-                    <Route exact path='/addProject' component={AddProject}/>
-                    <Route exact path='/updateProject/:id' component={UpdateProject}/>
-                    <Route exact path='/projectBoard/:id' component={ProjectBoard}/>
-                    <Route exact path='/addProjectTask/:id' component={AddProjectTask}/>
-                    <Route exact path='/updateProjectTask/:backlogId/:projectTaskId' component={UpdateProjectTask}/>
+                    <Switch>
+                        <SecuredRoute  exact path='/dashboard' component={Dashboard}/>
+                        <SecuredRoute  exact path='/addProject' component={AddProject}/>
+                        <SecuredRoute  exact path='/updateProject/:id' component={UpdateProject}/>
+                        <SecuredRoute  exact path='/projectBoard/:id' component={ProjectBoard}/>
+                        <SecuredRoute  exact path='/addProjectTask/:id' component={AddProjectTask}/>
+                        <SecuredRoute  exact path='/updateProjectTask/:backlogId/:projectTaskId' component={UpdateProjectTask}/>
+                    </Switch>
                 </div>
             </Router>
         </Provider>

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import classNames from "classnames";
 import {login} from "../../actions/securityActions";
 
-class Login extends  React.Component<any, any>  {
+class Login extends React.Component<any, any> {
     public static propTypes = {};
 
     constructor(props: any) {
@@ -12,13 +12,30 @@ class Login extends  React.Component<any, any>  {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            errors: {}
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(event:any){
+    componentDidMount() {
+        if (this.props.security.validToken) {
+            this.props.history.push('/dashboard');
+        }
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        if (nextProps.security.validToken) {
+            this.props.history.push('/dashboard');
+        }
+
+        if (nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
+
+    onSubmit(event: any) {
         event.preventDefault();
         const loginRequest = {
             username: this.state.username,
@@ -26,11 +43,13 @@ class Login extends  React.Component<any, any>  {
         };
         this.props.login(loginRequest);
     }
-    onChange(event:any){
+
+    onChange(event: any) {
         this.setState({[event.target.name]: event.target.value});
     }
 
     render() {
+        const {errors} = this.state;
         return (
             <div className="login">
                 <div className="container">
@@ -41,22 +60,32 @@ class Login extends  React.Component<any, any>  {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        className="form-control form-control-lg"
+                                        className={classNames("form-control form-control-lg", {
+                                            "is-invalid": errors.username
+                                        })}
                                         placeholder="Email Address"
                                         name="username"
                                         value={this.state.username}
                                         onChange={this.onChange}
                                     />
+                                    {errors.username && (
+                                        <div className="invalid-feedback">{errors.username}</div>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <input
                                         type="password"
-                                        className="form-control mt-2 form-control-lg"
+                                        className={classNames("form-control mb-2 form-control-lg", {
+                                            "is-invalid": errors.password
+                                        })}
                                         placeholder="Password"
                                         name="password"
                                         value={this.state.password}
                                         onChange={this.onChange}
                                     />
+                                    {errors.password && (
+                                        <div className="invalid-feedback">{errors.password}</div>
+                                    )}
                                 </div>
                                 <input type="submit" className="btn btn-info btn-block w-100 mt-4"/>
                             </form>
@@ -70,7 +99,8 @@ class Login extends  React.Component<any, any>  {
 
 Login.propTypes = {
     login: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state: any) => ({

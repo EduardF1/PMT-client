@@ -35,7 +35,7 @@ class UpdateProjectTask extends React.Component<any, any> {
     }
 
     // state after component mount
-    UNSAFE_componentWillReceiveProps(nextProps: any) {
+    componentWillReceiveProps(nextProps: any) {
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors});
         }
