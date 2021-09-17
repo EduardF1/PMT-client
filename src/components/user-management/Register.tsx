@@ -57,7 +57,7 @@ class Register extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        className={classNames("form-control form-control-lg", {
+                                        className={classNames("form-control mb-2 form-control-lg", {
                                             "is-invalid": errors.fullName
                                         })}
                                         placeholder="Full Name"
@@ -72,7 +72,7 @@ class Register extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="text"
-                                        className={classNames("form-control form-control-lg", {
+                                        className={classNames("form-control mb-2 form-control-lg", {
                                             "is-invalid": errors.username
                                         })}
                                         placeholder="Email Address (Username)"
@@ -87,7 +87,7 @@ class Register extends React.Component<any, any> {
                                 <div className="form-group">
                                     <input
                                         type="password"
-                                        className={classNames("form-control form-control-lg", {
+                                        className={classNames("form-control mb-2 form-control-lg", {
                                             "is-invalid": errors.password
                                         })}
                                         placeholder="Password"
@@ -116,7 +116,7 @@ class Register extends React.Component<any, any> {
                                         </div>
                                     )}
                                 </div>
-                                <input type="submit" className="btn btn-info btn-block mt-4" />
+                                <input type="submit" className="btn btn-info w-100 btn-block mt-4" />
                             </form>
                         </div>
                     </div>
