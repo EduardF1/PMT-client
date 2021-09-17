@@ -3,7 +3,7 @@ import {DELETE_PROJECT, GET_ERRORS, GET_PROJECT, GET_PROJECTS} from "./types";
 
 export const createProject = (project: any, history: any) => async (dispatch: any) => {
     try {
-        const res = await axios.post("http://localhost:8080/api/project", project);
+        const res = await axios.post("/api/project", project);
         history.push("/dashboard"); // redirect to dashboard
     } catch (err: any) {
         dispatch({
