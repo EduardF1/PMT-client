@@ -6,7 +6,7 @@ const initialState = {
 }
 
 const isActionPayloadSet = (payload: any) => {
-    return payload;
+    return payload ? true : false;
 }
 
 export default function (state = initialState, action: any) {
@@ -16,7 +16,7 @@ export default function (state = initialState, action: any) {
                 ...state,
                 validToken: isActionPayloadSet(action.payload),
                 user: action.payload
-            }
+            };
         default:
             return state;
     }
